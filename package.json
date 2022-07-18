@@ -4,6 +4,9 @@
   "description": "An API that can be used as a simple placeholder API, allows to place images into frontend with the size set via URL parameters and additional stylization for rapid prototyping, and as a library to serve properly scaled versions of images to the front end to reduce page load size. Rather than needing to resize and upload multiple copies of the same image to be used throughout a site, the API will handle resizing and serving stored images.",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon src/index.ts",
+    "build": "npx tsc",
+    "jasmine": "jasmine",
     "test": "npm run build && npm run jasmine"
   },
   "repository": {
@@ -22,15 +25,16 @@
   },
   "homepage": "https://github.com/aboudeif/Image-Processing-API#readme",
   "dependencies": {
-    "build": "npx tsc",
     "express": "^4.18.1",
     "jasmine": "^4.2.1",
-    "jasmine-spec-reporter": "^7.0.0"
+    "jasmine-spec-reporter": "^7.0.0",
+    "supertest": "^6.2.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/jasmine": "^4.0.3",
     "@types/node": "^18.0.6",
+    "@types/supertest": "^2.0.12",
     "eslint": "^8.20.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
