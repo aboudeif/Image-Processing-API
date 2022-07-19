@@ -1,22 +1,22 @@
-import { error } from 'console';
 import express, { RequestHandler } from 'express';
-import { promises as fs } from 'fs';
 import path from 'path';
+import fs from 'fs';
+import sharp from 'sharp';
 
 const routes = express.Router();
 
 const checkImage: RequestHandler = (req ,res ,next) => {
   const { filename } = req.query;
-  if(!filename){
-    throw new Error('Image name not specified, try to add ?filename=imageName');
+  if(!filename || !fs.existsSync(path.join(__dirname, '../../storage/images', `${filename}.jpg`))){
+    res.status(404).send('Image not found or missing file name, try to add ?filename=imageName');
   }
   next();
 };
 
 const checkSize: RequestHandler = (req ,res ,next) => {
   const { width, height } = req.query;
-  if(!width || !height){
-    throw new Error('Image size is required, try to add ?width=400&height=400');
+  if(!width || !height || width.valueOf() < 100 || height.valueOf() < 100){
+    res.status(404).send('Image size is missing or not correct, try to add ?width=400&height=400');
   }
   next();
 };
@@ -27,17 +27,27 @@ routes.get('/', (req: express.Request, res: express.Response) => {
   res.send('Hello World!');
 });
 
-routes.get('/images', middlewares, (req: express.Request, res: express.Response): void => {
-  
-    if(!path.join(__dirname, `../../storage/thumb/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`)) {
-      
-      res.send('image not resized');
+routes.get('/images', middlewares, async (req: express.Request, res: express.Response) => {
+  const thumb = path.join(__dirname, `../../storage/thumb/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`);
+    if(!fs.existsSync(thumb)) {
+      let image = path.join(__dirname, `../../storage/images/${req.query.filename}.jpg`);
+      const imageWidth = parseInt(req.query.width as string);
+      const imageHeight = parseInt(req.query.height as string);
+      sharp(image)
+      .resize(imageWidth, imageHeight)
+      .toFile(thumb).finally(() => {
+        res.sendFile(thumb);
+      });
+      // await fs.promises.(thumb, fs.constants.F_OK).then(() => {
+      // res.sendFile(thumb);
+      // });
+
     }
-    else {
-      const image = path.join(__dirname, `../../storage/thumb/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`);
-      res.sendFile(image);
+    else{
+    res.sendFile(thumb);
     }
-});
+    
+    });
 
 
 export default routes;
