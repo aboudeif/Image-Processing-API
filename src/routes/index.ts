@@ -38,10 +38,6 @@ routes.get('/images', middlewares, async (req: express.Request, res: express.Res
       .toFile(thumb).finally(() => {
         res.sendFile(thumb);
       });
-      // await fs.promises.(thumb, fs.constants.F_OK).then(() => {
-      // res.sendFile(thumb);
-      // });
-
     }
     else{
     res.sendFile(thumb);
