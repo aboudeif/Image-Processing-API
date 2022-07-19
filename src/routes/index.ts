@@ -23,14 +23,18 @@ const checkSize: RequestHandler = (req ,res ,next) => {
 
 const middlewares = [checkImage, checkSize];
 
+routes.get('/', (req: express.Request, res: express.Response) => {
+  res.send('Hello World!');
+});
+
 routes.get('/images', middlewares, (req: express.Request, res: express.Response): void => {
   
-    if(!path.join(__dirname, `../../storage/thumbnail/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`)) {
+    if(!path.join(__dirname, `../../storage/thumb/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`)) {
       
       res.send('image not resized');
     }
     else {
-      const image = path.join(__dirname, `../../storage/thumbnail/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`);
+      const image = path.join(__dirname, `../../storage/thumb/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`);
       res.sendFile(image);
     }
 });
