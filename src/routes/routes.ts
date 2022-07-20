@@ -72,5 +72,21 @@ routes.get('/api/images', async (req: express.Request, res: express.Response) =>
   res.json(imagesList);
 });
 
+routes.get(
+  '/api/show',
+  async (req: express.Request, res: express.Response) => {
+    if (
+      fs.existsSync(
+        path.join(__dirname, '../../storage/images', `${req.query.img}.jpg`)
+      )
+    ) {
+      res.sendFile(
+        path.join(__dirname, '../../storage/images', `${req.query.img}.jpg`)
+      )
+    } else {
+      res.sendFile(path.join(__dirname, '../../storage/images', `404.jpg`))
+    }
+  }
+)
 
 export default routes

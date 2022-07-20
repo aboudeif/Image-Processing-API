@@ -26,22 +26,31 @@
     <p>please select your image and enter size:
         <div class="card">
           <div class="card-body">
+            <div class="row mx-auto center my-2">
+              <div class="col-md-4 col-sm-12 m-auto">
+                <img id="img" class="img-fluid" src="" alt="" />
+              </div>
+            </div>
               <div class="form-group inline">
                 <label for="imgName">Select Image</label>
-                <select class="form-control" id="imgName"></select>
+                <select class="form-control" id="imgName" oninput="selectImg();">
+                  <option value="" disabled selected>Select Image</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="width">Width</label>
-                <input type="number" min="100" class="form-control" id="width">
+                <input type="number" min="100" class="form-control" id="width" placeholder="100" required />
                 <label for="height">Height</label>
-                <input type="number" min="100" class="form-control" id="height">
+                <input type="number" min="100" class="form-control" id="height" placeholder="100" required />
               </div>
               <button type="button" class="btn btn-primary"
-              onclick="genLink();">Generate image link</button>
+              onclick="generateLink();">Generate image link</button>
           </div>
           <div>
-            <a id="link"></a>
-            <span id="copy-btn" class="btn btn-primary" onclick="copyLink();">Copy</span>
+           <div id="link"></div>
+            <br>
+            <button id="copyBtn" class="btn btn-primary" onclick="copyLink();" style="display:none;">Copy</button>
+
           </div>
         </div>
       
@@ -56,21 +65,37 @@
         });
       });
         
-      function genLink() {
-        let imgName = $("#imgName").val();
+      function selectImg() {
+        $("#img").attr("src", "/api/show?img=" + $("#imgName").val().split('.')[0]);
+        $("#img").width("250px");
+        $("#img").height("250px");
+      }
+      
+      function generateLink() {
+        
+        let imgName = $("#imgName").val().split(".")[0];
         let width = $("#width").val();
         let height = $("#height").val();
-        let link = "http://localhost:8080/api/image?imgName=" + imgName + "&width=" + width + "&height=" + height;
-        $("#link").innerHTML = link;
-        $("#link").href = link;
-        $("#copy-btn").style.display = "block";
+
+        if (imgName == '' || width < 100 || height < 100) {
+          alert("→ Please select an image and enter a valid size\nwidth and height must be greater than or equal to 100");
+          return;
+        }
+
+        let link = "http://localhost:3000/images?filename=" + imgName + "&width=" + width + "&height=" + height;
+
+        $("#link").html("<a id='imgLink' href='" + link + "'>" + link + "</a>");
+        $("#copyBtn").show();
       }
       function copyLink() {
-        let copyText = document.getElementById("link");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-      }
+        let linkText = $("#imgLink").attr("href");
+        navigator.clipboard.writeText(linkText).then(function() {
+          alert("Link copied to clipboard");
+        }).catch(function(err) {
+          alert("Can't copy link");
+        });
+        }
+        
     </script>
 </body>
 
