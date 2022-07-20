@@ -2,9 +2,9 @@
   "name": "image-processing-api",
   "version": "1.0.0",
   "description": "An API that can be used as a simple placeholder API, allows to place images into frontend with the size set via URL parameters and additional stylization for rapid prototyping, and as a library to serve properly scaled versions of images to the front end to reduce page load size. Rather than needing to resize and upload multiple copies of the same image to be used throughout a site, the API will handle resizing and serving stored images.",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "nodemon dist/index.js",
+    "start": "nodemon src/index.ts",
     "build": "npx tsc",
     "jasmine": "jasmine",
     "test": "npm run build && npm run jasmine",

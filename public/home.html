@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="">
+  <!-- link jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- link bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+  <style>
+    li {
+      list-style-type: none;
+    }
+  </style>
+  <div style="text-align:center; margin-top:100px;">
+    <h1>Image Processing API</h1>
+    <p>please select your image and enter size:
+        <div class="card">
+          <div class="card-body">
+              <div class="form-group inline">
+                <label for="imgName">Select Image</label>
+                <select class="form-control" id="imgName"></select>
+              </div>
+              <div class="form-group">
+                <label for="width">Width</label>
+                <input type="number" min="100" class="form-control" id="width">
+                <label for="height">Height</label>
+                <input type="number" min="100" class="form-control" id="height">
+              </div>
+              <button type="button" class="btn btn-primary"
+              onclick="genLink();">Generate image link</button>
+          </div>
+          <div>
+            <a id="link"></a>
+            <span id="copy-btn" class="btn btn-primary" onclick="copyLink();">Copy</span>
+          </div>
+        </div>
+      
+    <div>
+
+    </div>
+    <script>
+      // get image list
+      $.get("/api/images", function(data) {
+        $.each(data, function(index, value) {
+          $("#imgName").append("<option value='" + value + "'>" + value + "</option>");
+        });
+      });
+        
+      function genLink() {
+        let imgName = $("#imgName").val();
+        let width = $("#width").val();
+        let height = $("#height").val();
+        let link = "http://localhost:8080/api/image?imgName=" + imgName + "&width=" + width + "&height=" + height;
+        $("#link").innerHTML = link;
+        $("#link").href = link;
+        $("#copy-btn").style.display = "block";
+      }
+      function copyLink() {
+        let copyText = document.getElementById("link");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+      }
+    </script>
+</body>
+
+</html>

@@ -37,7 +37,7 @@ const checkSize: RequestHandler = (req, res, next) => {
 const middlewares = [checkImage, checkSize]
 
 routes.get('/', (req: express.Request, res: express.Response) => {
-  res.send('Hello World!')
+  res.sendFile(path.join(__dirname, '../../public/home.html'))
 })
 
 routes.get(
@@ -66,5 +66,11 @@ routes.get(
     }
   }
 )
+
+routes.get('/api/images', async (req: express.Request, res: express.Response) => {
+  const imagesList: string[] = await fs.readdirSync(path.join(__dirname, '../../storage/images'));
+  res.json(imagesList);
+});
+
 
 export default routes
