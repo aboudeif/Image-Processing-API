@@ -1,10 +1,10 @@
-import express from 'express';
-import routes from './routes/index';
+import express from 'express'
+import routes from './routes/routes'
 
-const api = express();
-const port = 3000;
+const api = express()
+const port = 3000
 
-api.use('/', routes);
+api.use(routes)
 api.listen(port)
 
-export default api;
+export default api
