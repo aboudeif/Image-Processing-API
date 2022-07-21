@@ -77,7 +77,7 @@ npm start
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@aboudeif](https://github.com/aboudeif) - Idea & Initial work
+- [@aboudeif](https://github.com/aboudeif)
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
