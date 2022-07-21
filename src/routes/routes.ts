@@ -2,56 +2,35 @@ import express, { RequestHandler } from 'express'
 import path from 'path'
 import fs from 'fs'
 import sharp from 'sharp'
+import multer from 'multer'
+import { checkImage, existImage, checkSize, validSize } from '../middlewares/middleware'
+
+
 
 const routes = express.Router()
+const upload = multer({ dest: 'uploads/' })
+const middlewares = [checkImage,existImage, checkSize, validSize]
 
-const checkImage: RequestHandler = (req, res, next) => {
-  const { filename } = req.query
-  if (
-    !filename ||
-    !fs.existsSync(
-      path.join(__dirname, '../../storage/images', `${filename}.jpg`)
-    )
-  ) {
-    res
-      .status(404)
-      .send(
-        'Image not found or missing file name, try to add ?filename=imageName'
-      )
-  }
-  next()
-}
-
-const checkSize: RequestHandler = (req, res, next) => {
-  const { width, height } = req.query
-  if (!width || !height || width.valueOf() < 100 || height.valueOf() < 100) {
-    res
-      .status(404)
-      .send(
-        'Image size is missing or not correct, try to add ?width=400&height=400'
-      )
-  }
-  next()
-}
-
-const middlewares = [checkImage, checkSize]
-
+// home page
 routes.get('/', (req: express.Request, res: express.Response) => {
   res.sendFile(path.join(__dirname, '../../public/home.html'))
 })
 
+// resize image then send it to client
 routes.get(
   '/images',
   middlewares,
   async (req: express.Request, res: express.Response) => {
+    const filename = (req.query.filename as string).split('.')[0];
+    const extension = (req.query.filename as string).split('.')[1];
     const thumb = path.join(
       __dirname,
-      `../../storage/thumb/${req.query.filename}_${req.query.width}x${req.query.height}.jpg`
+      `../../storage/thumb/${filename}_${req.query.width}x${req.query.height}.${extension}`
     )
     if (!fs.existsSync(thumb)) {
       const image = path.join(
         __dirname,
-        `../../storage/images/${req.query.filename}.jpg`
+        `../../storage/images/${req.query.filename}`
       )
       const imageWidth = parseInt(req.query.width as string)
       const imageHeight = parseInt(req.query.height as string)
@@ -67,26 +46,41 @@ routes.get(
   }
 )
 
+// return a list of images names to home.html page
 routes.get('/api/images', async (req: express.Request, res: express.Response) => {
   const imagesList: string[] = await fs.readdirSync(path.join(__dirname, '../../storage/images'));
   res.json(imagesList);
 });
 
+// return the selected image to home.html page
 routes.get(
   '/api/show',
   async (req: express.Request, res: express.Response) => {
     if (
       fs.existsSync(
-        path.join(__dirname, '../../storage/images', `${req.query.img}.jpg`)
+        path.join(__dirname, '../../storage/images', `${req.query.img}`)
       )
     ) {
       res.sendFile(
-        path.join(__dirname, '../../storage/images', `${req.query.img}.jpg`)
+        path.join(__dirname, '../../storage/images', `${req.query.img}`)
       )
     } else {
       res.sendFile(path.join(__dirname, '../../storage/images', `404.jpg`))
     }
   }
 )
+
+// upload image to storage/images folder
+routes.post('/upload', upload.single('uploaded_file'), function (req: express.Request, res: express.Response) {
+  const originalname = req.file?.originalname || '' as string;
+  const extension = originalname.split('.').pop();
+  //  replace spaces, dots, underscoures with hiphens
+  const imageName = originalname.slice(0,-4).replace(/[\s._]/g, '-');
+  fs.rename(req.file?.path || '', path.join(__dirname, '../../storage/images', Date.now() + '-' + imageName + '.' + extension), function (err) {
+    if (err) throw err;
+  }
+  );
+  res.redirect('/');
+});
 
 export default routes

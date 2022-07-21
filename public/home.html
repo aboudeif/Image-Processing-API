@@ -9,9 +9,9 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="">
-  <!-- link jquery -->
+  <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- link bootstrap -->
+  <!-- bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
@@ -23,7 +23,7 @@
   </style>
   <div style="text-align:center; margin-top:100px;">
     <h1>Image Processing API</h1>
-    <p>please select your image and enter size:
+    <p>please select your image and enter size</p>
         <div class="card">
           <div class="card-body">
             <div class="row mx-auto center my-2">
@@ -49,14 +49,32 @@
           <div>
            <div id="link"></div>
             <br>
-            <button id="copyBtn" class="btn btn-primary" onclick="copyLink();" style="display:none;">Copy</button>
+            <button id="copyBtn" class="btn btn-primary mb-4" onclick="copyLink();" style="display:none;">Copy</button>
 
           </div>
         </div>
-      
-    <div>
+  </div>
 
+  <div style="text-align:center; margin-top:100px;" class="my-2">
+    <p>Or upload new image</p>
+    <div class="card my-2">
+      <div class="card-body">
+        <div class="row mx-auto center my-2">
+          <div class="col-md-4 col-sm-12 m-auto">
+            <form action="/upload" enctype="multipart/form-data" method="post">
+              <div class="form-group p-2">
+                <input type="file" class="form-control-file my-2" name="uploaded_file" style="background-color: #eee;">
+                <input type="hidden" value="1" name="nspeakers">
+                <input type="submit" value="upload" class="btn btn-primary my-2">            
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+
     <script>
       // get image list
       $.get("/api/images", function(data) {
@@ -64,16 +82,16 @@
           $("#imgName").append("<option value='" + value + "'>" + value + "</option>");
         });
       });
-        
+      
       function selectImg() {
-        $("#img").attr("src", "/api/show?img=" + $("#imgName").val().split('.')[0]);
+        $("#img").attr("src", "/api/show?img=" + $("#imgName").val());
         $("#img").width("250px");
         $("#img").height("250px");
       }
       
       function generateLink() {
         
-        let imgName = $("#imgName").val().split(".")[0];
+        let imgName = $("#imgName").val();
         let width = $("#width").val();
         let height = $("#height").val();
 
