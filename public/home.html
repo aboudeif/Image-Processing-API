@@ -99,8 +99,8 @@
           alert("→ Please select an image and enter a valid size\nwidth and height must be greater than or equal to 100");
           return;
         }
-
-        let link = "http://localhost:3000/images?filename=" + imgName + "&width=" + width + "&height=" + height;
+        
+        let link = window.location.href + "images?filename=" + imgName + "&width=" + width + "&height=" + height;
 
         $("#link").html("<a id='imgLink' href='" + link + "'>" + link + "</a>");
         $("#copyBtn").show();

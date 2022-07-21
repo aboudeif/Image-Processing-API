@@ -22,7 +22,6 @@ export const existImage = (
   next: express.NextFunction
 ) => {
   const filename = req.query.filename as string
-  console.log(' filename= ' + filename)
   if (
     !fs.existsSync(path.join(__dirname, `../../storage/images/${filename}`))
   ) {
