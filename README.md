@@ -8,8 +8,8 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/aboudeif/Image-Processing-API.git.svg)](https://github.com/aboudeif/Image-Processing-API.git/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/aboudeif/Image-Processing-API.git.svg)](https://github.com/aboudeif/Image-Processing-API.git/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/aboudeif/The-Documentation-Compendium.svg)](https://github.com/aboudeif/The-Documentation-Compendium/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/aboudeif/The-Documentation-Compendium.svg)](https://github.com/aboudeif/The-Documentation-Compendium/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
