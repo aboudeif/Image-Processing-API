@@ -29,9 +29,9 @@ describe('Test images routes', () => {
     const response = await request.get(
       `/images?filename=${fileName}.${extension}&width=${width}&height=${height}`
     )
-  
+
     expect(response.status).toBe(200)
-})
+  })
 })
 
 describe('test image processing function', () => {
