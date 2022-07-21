@@ -8,8 +8,8 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/aboudeif/Image-Processing-API.git.svg)](https://github.com/aboudeif/Image-Processing-API.git/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/aboudeif/Image-Processing-API.git.svg)](https://github.com/aboudeif/Image-Processing-API.git/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
@@ -34,11 +34,19 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+An API that can be used as a simple placeholder API, allows to place images into frontend with the size set via URL parameters and additional stylization for rapid prototyping, and as a library to serve properly scaled versions of images to the front end to reduce page load size. Rather than needing to resize and upload multiple copies of the same image to be used throughout a site, the API will handle resizing and serving stored images.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+Go to http://localhost:3000/ 
+
+→ Select an image or upload a new one
+→ Enter a width and height for selected image (must be >= 100)
+→ Click 'Generate image linke'
+→ Click 'Copy' to copy link or click on it
+  & Open generated link to find resized image
+
+## 🏁 Deployment <a name = "deployment"></a>
 
 ### Prerequisites
 
@@ -49,45 +57,30 @@ node.js
 ```
 npm install
 ```
-
 ## 🔧 Running the tests <a name = "tests"></a>
 
 ```
 npm test
 ```
-
 ### And coding style tests
-
 
 ```
 npm run lint
 ```
-
 ## 🎈 Usage <a name="usage"></a>
 
 ```
 npm start
 ```
-
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
-
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
 - [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+- [@aboudeif](https://github.com/aboudeif) - Idea & Initial work
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+This project is requierd for Egypt-FWD schollership "Advanced Full-Stack Web Development Nanodegree Program"
