@@ -7,7 +7,7 @@ export const checkImage = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+): void => {
   const { filename } = req.query
   if (!filename) {
     res.status(400).send('Missing file name, try to add ?filename=imageName')
@@ -20,12 +20,12 @@ export const existImage = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+): void => {
   const filename = req.query.filename as string
   if (
     !fs.existsSync(path.join(__dirname, `../../storage/images/${filename}`))
   ) {
-    res.status(417)
+    res.status(417).send('image not found, there is no image with name: '+filename+' , try to upload it first')
   } else {
     next()
   }
@@ -36,7 +36,7 @@ export const checkSize = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+): void => {
   const { width, height } = req.query
   if (!width || !height) {
     res
@@ -51,11 +51,11 @@ export const validSize = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+): void => {
   const width = (req.query.width as unknown) as number
   const height = (req.query.height as unknown) as number
   if (width < 100 || height < 100) {
-    res.status(404)
+    res.status(417).send('Image size must be greater than or equal to 100x100, try to add ?width=400&height=400')
   }
   next()
 }

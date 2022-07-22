@@ -95,7 +95,7 @@
         let width = $("#width").val();
         let height = $("#height").val();
 
-        if (imgName == '' || width < 100 || height < 100) {
+        if (imgName == null || width < 100 || height < 100) {
           alert("→ Please select an image and enter a valid size\nwidth and height must be greater than or equal to 100");
           return;
         }
