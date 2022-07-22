@@ -34,8 +34,13 @@ export function getRandomImageInfo(): string[] {
 
 // resize image and return the path of the new image
 export async function resizeImage([thumb, image, width, height]: string[]): Promise<boolean> {
-  await sharp(image).resize(parseInt(width), parseInt(height)).toFile(thumb)
-  return await fs.existsSync(thumb)
+  await sharp(image)
+    .resize(parseInt(width), parseInt(height))
+    .toFile(thumb)
+    .catch(() => {
+      return false
+    })
+  return fs.existsSync(thumb) ? true : false
 }
 
 // upload image to uploads folder
@@ -48,7 +53,7 @@ export function uploadImage(req: express.Request): string {
     req.file?.path || ('' as string),
     path.join(__dirname, '../../storage/images', Date.now() + '-' + imageName + '.' + extension),
     function (err) {
-      if (err) return ''
+      if (err) return err.message as string
     }
   )
   return 'upload is done'

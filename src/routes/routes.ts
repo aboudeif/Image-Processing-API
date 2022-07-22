@@ -2,12 +2,12 @@ import express from 'express'
 import path from 'path'
 import fs from 'fs'
 import multer from 'multer'
-import { checkImage, existImage, checkSize, validSize } from '../middlewares/middleware'
+import { checkFileName, existImage, checkSize, sizeIsNumber, validSize } from '../middlewares/middleware'
 import { getThumbInfo, resizeImage, uploadImage } from '../handlers/imageProcess'
 
 const routes = express.Router()
 const upload = multer({ dest: 'uploads/' })
-const middlewares = [checkImage, existImage, checkSize, validSize]
+const middlewares = [checkFileName, existImage, checkSize, sizeIsNumber, validSize]
 
 // home page
 routes.get('/', (req: express.Request, res: express.Response): void => {
@@ -21,8 +21,8 @@ routes.get(
   async (req: express.Request, res: express.Response): Promise<void> => {
     const info = getThumbInfo(req)
     if (!fs.existsSync(info[0])) {
-      const response = resizeImage(info)
-      ;(await response) ? res.status(200).sendFile(info[0]) : res.status(500).send('error, cannot resize image')
+      const response = await resizeImage(info)
+      response ? res.status(200).sendFile(info[0]) : res.status(500).send('error, cannot resize image')
     } else {
       res.status(200).sendFile(info[0])
     }
