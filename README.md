@@ -36,7 +36,7 @@ An API that can be used as a simple placeholder API, allows to place images into
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-Go to http://localhost:3000/ 
+Go to entry point to application: http://localhost:3000/ 
 
 → Select an image or upload a new one
 → Enter a width and height for selected image (must be >= 100)
@@ -70,6 +70,24 @@ npm run lint
 ```
 npm start
 ```
+then open your browser and use entry point to application
+
+```
+http://localhost:3000/
+```
+you can use use view provided in the home page '/' or you can use other urls directly
+for example '/images' is where you can resize an image providing filename, width and height
+
+```
+http://localhost:3000/images?filename=404.jpg&width=255&height=255
+```
+where image name = 404.jpg, given width = 255 and given height = 255.
+another example is '/api/images' where you can got a list of all images in json form
+
+```
+http://localhost:3000/api/images
+```
+
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [Express](https://expressjs.com/) - Server Framework
