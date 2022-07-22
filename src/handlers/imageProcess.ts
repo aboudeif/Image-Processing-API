@@ -53,7 +53,7 @@ export function uploadImage(req: express.Request): string {
     req.file?.path || ('' as string),
     path.join(__dirname, '../../storage/images', Date.now() + '-' + imageName + '.' + extension),
     function (err) {
-      if (err) return err.message as string
+      if(err) return err.message as string
     }
   )
   return 'upload is done'
